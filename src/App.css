@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+ 
+  
 }
 
 .App-logo {
@@ -35,4 +38,60 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+header {
+  height: 5vh;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+main{
+  width: 20rem;
+  margin: 9rem auto;
+}
+
+.top {
+  background: url(https://images.pexels.com/photos/3473569/pexels-photo-3473569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
+  height: 85vh;
+}
+
+.result {
+  height: 100px;
+  width: 100%;
+  background: #0077c0;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #fff;
+}
+.result h1 {
+  margin-right: 15px;
+}
+ 
+.btn-group {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+}
+
+button {
+ width: 5rem;
+ height: 5rem;
+ border-radius: 0;
+ font-size: 24px;
+ color: #002D62;
+ font-weight: bold;
+ cursor: pointer;
+ background: linear-gradient(to bottom right,#B9D9EB);
+ border: 1px solid #ADD8E6;
+}
+
+footer {
+  padding: 3rem 0;
+  text-align: center;
+  color: #002D62;
 }
