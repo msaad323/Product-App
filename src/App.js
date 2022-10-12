@@ -1,53 +1,58 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
- 
-  const btns = ['+', '-', '*', '/', 1,2,3,'C',4,5,6,'=',7,8,9,'<','', 0, '.', '']
-  
-  const [result, setResult] = useState('')
+  const [keep, setKeep] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [filterText, setFilterText] = useState("");
 
-  const clickHandler = (event) => {
-    if(event.target.name === 'C'){
-      setResult('')
-      return;
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((data) => {setPosts(data)
+      setKeep(data)
+      });
+  }, []);
+
+  const handleChange = (event) => {
+    setFilterText(event.target.value);
+    if (event.target.value === ''){
+      setPosts(keep)
     }
-    if(event.target.name === '='){
-      setResult(eval(result).toString());
-      return;
-    }
+  };
+
+  const applyFilter = (event) => {
+    event.preventDefault();
     
-    if(event.target.name === '<'){
-      setResult(result.slice(0,-1));
-      return;
-    }
+    // if(event.target.value === ''){
+    //  setPosts(prev => prev)
+    // }
 
-    setResult(prev => {
-      return prev.concat(event.target.name)
-    })
-  }
- 
+    setPosts((prev) => {
+      return [
+        ...posts.filter((post) => post.title.includes(filterText)),
+      ];
+    });
+    
+  };
+
   return (
     <div className="App">
-     <div className="top">
-       <header>
-         <h1>Calculator</h1>
-       </header>
-        <main>
-          <div className="result">
-            <h1>{result}</h1></div>
-          <div className="btn-group">
-            {btns.map(el =>
-              <div key={el}>
-                <button name={el} onClick={clickHandler}>{el}</button>
-                </div>
-              )}
-          </div>
-        </main>
-     </div>
-     <footer>
-      <p>Copyright &copy; 2022 Calculator, All rights reserved.</p>
-     </footer>
+      <form onSubmit={applyFilter}>
+        <input
+          onChange={handleChange}
+          type="text"
+          name=""
+          placeholder="Enter filtered text"
+        />
+        <button type="submit">Filter Posts</button>
+      </form>
+      {posts.map((post) => (
+        <div className="posts" key={post.id}>
+          <h1>{post.title}</h1>
+          <p>{post.body}</p>
+        </div>
+      ))}
     </div>
   );
 }
